@@ -1,8 +1,8 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 function TodoForm(props) {
 
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState(props.edit ? props.edit.value : '');
 
     const inputReference = useRef(null)
 
@@ -19,25 +19,43 @@ function TodoForm(props) {
         e.preventDefault();
 
         props.onSubmit({
-            id:Math.floor(Math.random() * 10000),
+            id: Math.floor(Math.random() * 10000),
             text: input
-        }); 
+        });
         setInput('');
     };
 
 
     return (
         <form className="todo-form" onSubmit={handleSubmit}>
-            <input 
-                type='text'
-                placeholder='Add a todo'
-                value={input}
-                name="text"
-                className="todo-input"
-                onChange={handleChange}
-                ref={inputReference}
-             />
-             <button className="todo-button">Add todo</button>
+            {props.edit ? (
+                <>
+                    <input
+                        type='text'
+                        placeholder='Update your item'
+                        value={input}
+                        name="text"
+                        className="todo-input"
+                        onChange={handleChange}
+                        ref={inputReference}
+                    />
+                    <button className="todo-button">Update</button>
+                </>
+            ) :
+                (
+                    <>
+                        <input
+                            type='text'
+                            placeholder='Add a todo'
+                            value={input}
+                            name="text"
+                            className="todo-input"
+                            onChange={handleChange}
+                            ref={inputReference}
+                        />
+                        <button className="todo-button">Add todo</button>
+                    </>)}
+
         </form>
     )
 }
