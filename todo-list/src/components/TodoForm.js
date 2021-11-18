@@ -1,8 +1,14 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 
 function TodoForm(props) {
 
     const [input, setInput] = useState('');
+
+    const inputReference = useRef(null)
+
+    useEffect(() => {
+        inputReference.current.focus()
+    })
 
     const handleChange = e => {
         setInput(e.target.value);
@@ -29,6 +35,7 @@ function TodoForm(props) {
                 name="text"
                 className="todo-input"
                 onChange={handleChange}
+                ref={inputReference}
              />
              <button className="todo-button">Add todo</button>
         </form>
